@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     var timeCounter = 0
     var kennyArray = [UIImageView]()
     var hideTimer = Timer()
+    var highScore = 0
     
     //Labels
     
@@ -41,6 +42,20 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Highscore check
+        
+        let storedHighscore = UserDefaults.standard.object(forKey: "highscore")
+        
+        if storedHighscore == nil {
+            highScore = 0
+            highScoreLabel.text = "Highscore: \(highScore)"
+        }
+        
+        if let newScore = storedHighscore as? Int {
+            highScore = newScore
+            highScoreLabel.text = "Highscore: \(highScore)"
+        }
         
         // Recognizers
         
@@ -112,6 +127,17 @@ class ViewController: UIViewController {
             timer.invalidate()
             hideTimer.invalidate()
             timeLabel.text = "Time's Up"
+            
+            // Highscore
+            
+            if self.score > self.highScore {
+                self.highScore = self.score
+                highScoreLabel.text = "Highscore: \(self.highScore)"
+                UserDefaults.standard.set(self.highScore, forKey: "highscore")
+            }
+            
+            
+            // Hide Kenny
             
             for kenny in kennyArray {
                 kenny.isHidden = true
