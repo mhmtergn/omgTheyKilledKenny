@@ -78,7 +78,7 @@ class ViewController: UIViewController {
         
         // Timer
         
-        timeCounter = 10
+        timeCounter = 20
         timeLabel.text = String(timeCounter)
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
@@ -125,6 +125,15 @@ class ViewController: UIViewController {
                        
                        let replayButton = UIAlertAction(title: "Hell Yeah!", style: UIAlertAction.Style.default) { UIAlertAction in
                            //replay Function
+                           
+                           self.score = 0
+                           self.scoreLabel.text = "Score: \(self.score)"
+                           self.timeCounter = 20
+                           self.timeLabel.text = String(self.timeCounter)
+                           
+                           self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.countDown), userInfo: nil, repeats: true)
+                           self.hideTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.hideKenny), userInfo: nil, repeats: true)
+                           
         }
             alert.addAction(okButton)
                        alert.addAction(replayButton)
